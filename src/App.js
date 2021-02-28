@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React, { Fragment } from 'react';
 import './App.css';
+import { LoaderSpinner, ErrorAlert } from './components/Exceptions/Exceptions';
+import Gallery from './components/Gallery/Gallery';
+import TumbnailGrid from './components/TumbnailGrid/TumbnailGrid';
+import { IMAGES_API } from './constants/api';
+import useFetch from './hooks/useFetch';
 
 function App() {
+  const { data, error, isLoading } = useFetch(IMAGES_API);
+
+  if (isLoading) {
+    return <LoaderSpinner />
+  }
+
+  if (error) {
+    return <ErrorAlert error={error} />
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <h1 className="header">Gallery</h1>
+      {data &&
+        <Fragment>
+          <Gallery images={data} />
+          <TumbnailGrid images={data} />
+        </Fragment>
+      }
     </div>
   );
 }

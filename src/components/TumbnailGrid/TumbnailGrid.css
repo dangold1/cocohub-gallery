@@ -1,0 +1,19 @@
+.flex-grid {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.col {
+  flex: 1;
+}
+
+.tumbnail {
+  width: 120px;
+  height: 80px;
+}
+
+@media (max-width: 400px) {
+  .flex-grid {
+    display: block;
+  }
+}
